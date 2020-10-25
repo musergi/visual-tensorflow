@@ -1,0 +1,17 @@
+# Python compiled files
+__pycache__/
+*.py[cod]
+
+# IDE files
+.vscode
+
+# MAC folder
+.DS_Store
+
+# Database
+.sqlite3
+*.db
+
+# Django
+**/migrations/**
+*.log
