@@ -1,2 +1,5 @@
 # Database
 *.sqlite3
+
+datasets/
+models/
