@@ -24,11 +24,27 @@ class TensorflowModel(models.Model):
 
     def _train(self, dataset: Dataset):
        (x_train, y_train), (x_test, y_test) = dataset.load() 
-       model = self._load()
+       model = self.load()
        model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
        model.fit(x_train, y_train, epochs=1)
        model.evaluate(x_test, y_test, verbose=2)
 
-    def _load(self):
+    def _load(self) -> tf.keras.Model:
         with self.model_file.open('r') as f:
             return tf.keras.models.model_from_json(f.read())
+
+    def to_dict(self) -> dict:
+        tf_model = self._load()
+        return {
+            'input_shape': str(tf_model.input_shape),
+            'output_shape': str(tf_model.output_shape),
+            'layers': [self._layer_to_dict(layer) for layer in tf_model.layers]
+        }
+    
+    @staticmethod
+    def _layer_to_dict(layer: tf.keras.layers.Layer):
+        return {
+            'name': layer.name,
+            'input_shape': layer.input_shape,
+            'output_shape': layer.output_shape
+        }
