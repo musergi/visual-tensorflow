@@ -1,12 +1,17 @@
 {% extends "main/base.html" %}
 
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'main/index.css' %}">
+{% endblock %}
+
 {% block content %}
 <h1>Visual Tensorflow</h1>
 <div>
     <h3>Datasets</h3>
     <ul>
         {% for dataset in datasets %}
-        <li><a href='#'>{{dataset.name}}</a></li>
+        <li><a href="#">{{dataset.name}}</a></li>
         {% endfor %}
     </ul>
 </div>
@@ -14,7 +19,7 @@
     <h3>Models</h3>
     <ul>
         {% for model in models %}
-        <li><a href='model/{{model.id}}/'>{{model.name}}</a></li>
+        <li><a href="model/{{model.id}}/">{{model.name}}</a></li>
         {% endfor %}
     </ul>
 </div>

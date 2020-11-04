@@ -1,0 +1,31 @@
+body {
+    all: unset;
+}
+
+body * {
+    all: unset
+}
+
+html {
+    --color-primary: #FF6F00;
+    --color-gray: #5F6368;
+    --color-dark-gray: #303336;
+    --color-light-gray: #C9CCCF;
+    --color-blue: #1A73E8;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--color-gray);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    color: white;
+    background-color: var(--color-primary);
+    font-size: 2em;
+    font-weight: 900;
+    text-align: center;
+    padding: 0.5em;
+}
