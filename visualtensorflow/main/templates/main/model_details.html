@@ -1,11 +1,16 @@
 {% extends "main/base.html" %}
 
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'main/model_details.css' %}">
+{% endblock %}
+
 {% block content %}
 <h1>Neural Network Name</h1>
-<div>
+<div class="content">
     <ul>
-        <li>
-            Layer 1 Name
+        <li class="layer">
+            <h3>Layer 1 Name</h3>
             <ul>
                 <li>28x28</li>
                 <li>784</li>
