@@ -6,17 +6,24 @@
 {% endblock %}
 
 {% block content %}
-<h1>Neural Network Name</h1>
+<h1>{{model.name}}</h1>
 <div class="content">
-    <ul>
-        <li class="layer">
-            <h3>Layer 1 Name</h3>
-            <ul>
-                <li>28x28</li>
-                <li>784</li>
-            </ul>
-        </li>
-    </ul>
+    <table>
+        <tr>
+            <th>Layer name</th>
+            <th>Input shape</th>
+            <th>Output shape</th>
+            <th>Parameters</th>
+        </tr>
+        {% for layer in model.layers %}
+        <tr>
+            <td>{{layer.name}}</td>
+            <td>{{layer.input_shape}}</td>
+            <td>{{layer.output_shape}}</td>
+            <td>{{layer.params}}</td>
+        </tr>
+        {% endfor %}
+    </table>
     <a href="train/">Train</a>
 </div>
 {% endblock %}

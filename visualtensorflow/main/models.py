@@ -1,5 +1,6 @@
 import pickle
 from threading import Thread
+import numpy as np
 import tensorflow as tf
 from django.db import models
 
@@ -16,13 +17,13 @@ class TensorflowModel(models.Model):
     name = models.CharField(max_length=200)
     model_file = models.FileField(upload_to='models/')
 
-    def start_training(self, dataset: Dataset):
+    def start_training(self, dataset: Dataset) -> None:
         # TODO: Check
         Thread(
             target=lambda: self._train(dataset),
             daemon=False).run()
 
-    def _train(self, dataset: Dataset):
+    def _train(self, dataset: Dataset) -> None:
        (x_train, y_train), (x_test, y_test) = dataset.load() 
        model = self.load()
        model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
@@ -36,15 +37,15 @@ class TensorflowModel(models.Model):
     def to_dict(self) -> dict:
         tf_model = self._load()
         return {
-            'input_shape': str(tf_model.input_shape),
-            'output_shape': str(tf_model.output_shape),
+            'name': self.name,
             'layers': [self._layer_to_dict(layer) for layer in tf_model.layers]
         }
     
     @staticmethod
-    def _layer_to_dict(layer: tf.keras.layers.Layer):
+    def _layer_to_dict(layer: tf.keras.layers.Layer) -> dict:
         return {
-            'name': layer.name,
-            'input_shape': layer.input_shape,
-            'output_shape': layer.output_shape
+            'name': layer.name.replace('_', ' ').capitalize(),
+            'input_shape': 'x'.join(str(dim) for dim in layer.input_shape[1:]),
+            'output_shape': 'x'.join(str(dim) for dim in layer.output_shape[1:]),
+            'params': layer.count_params()
         }
